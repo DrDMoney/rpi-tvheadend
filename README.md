@@ -10,13 +10,13 @@ Requirement
  - a Raspberry PI (or a clone working with ARM processor)
  - a working Docker environment
  - a DVB adapter
-  - supported by tvheadend 
+  - supported by tvheadend
   - supported by your host linux distribution with correct driver
 
 Limitation
 ----------
 Due to the small raspberry's processor, transcoding is not enabled.
-For the same reason, it is best to use a wired network. 
+For the same reason, it is best to use a wired network.
 You can try with wifi G / N in a really good condition
 
 Average network usage
@@ -45,6 +45,18 @@ If you want to persist video records, you should mount an external HDD.
 Installation
 ------------
 initctl script : Copy docker-tvheadend.service to /etc/systemd/system/multi-user.target.wants
+
+Tuner installation for AverMedia Volar HD Pro Carte TV USB :
+```
+cd /lib/firmware
+wget http://xgazza.altervista.org/Linux/DVB/dvb-usb-af9035-02.fw
+wget http://www.ite.com.tw/uploads/firmware/v3.6.0.0/dvb-usb-it9135.zip
+unzip
+dd if=dvb-usb-it9135.fw ibs=1 skip=64 count=8128 of=dvb-usb-it9135-01.fw
+dd if=dvb-usb-it9135.fw ibs=1 skip=12866 count=5817 of=dvb-usb-it9135-02.fw
+cp dvb-usb-it9135* /lib/firmware/
+tail -40 /var/log/kern.log
+```
 
 Contributions
 ------------
