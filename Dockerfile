@@ -17,12 +17,18 @@ RUN apt-get update && \
                         wget \
                         cmake \
                         ca-certificates
+                        
+RUN apt-get install -m -y wget git curl make dkms dpkg-dev \
+    debconf-utils software-properties-common \
+    build-essential hdhomerun-config libhdhomerun-dev debhelper libswscale-dev \
+    libavahi-client-dev libavformat-dev libavcodec-dev liburiparser-dev \
+    libssl-dev libiconv-hook1 libiconv-hook-dev
 
 # Compile tvheadend from master
 RUN cd /tmp && \
     git clone https://github.com/tvheadend/tvheadend.git && \
     cd /tmp/tvheadend && \
-    ./configure && \
+    ./configure --libffmpeg_static && \
     make && \
     make install && \
     cd / && \
